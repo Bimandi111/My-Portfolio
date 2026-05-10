@@ -157,4 +157,6 @@ This is a personal portfolio. For suggestions or issues, feel free to reach out 
 
 ---
 
+visit site on -> https://bimandinesanga.netlify.app
+
 **Built with** ❤️ **using HTML · CSS · JavaScript · Three.js · WebGL**
