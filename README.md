@@ -27,7 +27,7 @@ A modern, interactive portfolio website showcasing software engineering projects
 
 ### Tools & Deployment
 - **Git** – Version control
-- **Vercel** – Recommended deployment platform
+- **Netlify** – Recommended deployment platform
 - **VS Code** – Development environment
 
 ## 📁 Project Structure
