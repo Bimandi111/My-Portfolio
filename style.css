@@ -861,9 +861,21 @@ footer{
   to{opacity:1;transform:translateY(0)}
 }
 
+.edu-card-wide{grid-column:1/-1}
+@media(max-width:640px){.edu-card-wide{grid-column:auto}}
+/* project card wide + inner grid */
+.proj-card-wide{grid-column:1/-1}
+.proj-inner-grid{display:grid;grid-template-columns:1fr 1fr;min-height:0}
+@media(max-width:640px){
+  .proj-card-wide{grid-column:auto}
+  .proj-inner-grid{grid-template-columns:1fr;display:flex;flex-direction:column}
+}
+
 /* ═══════════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE — full coverage down to 320px
 ═══════════════════════════════════════════ */
+
+/* ── Tablet landscape ── */
 @media(max-width:1024px){
   .about-grid{grid-template-columns:1fr;gap:3rem}
   .proj-card.featured{grid-template-columns:1fr}
@@ -871,30 +883,177 @@ footer{
   .contact-grid{grid-template-columns:1fr;gap:3rem}
   .edu-grid{grid-template-columns:1fr}
   .sk-featured-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-role{white-space:normal;font-size:clamp(1.1rem,3vw,1.8rem)}
 }
+
+/* ── Tablet portrait / large mobile ── */
 @media(max-width:900px){
-  nav{padding:0 1.5rem}
+  nav{padding:0 1.25rem}
   .nav-links,.nav-cta{display:none}
   .nav-toggle{display:flex}
-  .si{padding:5.5rem 5vw}
+  .si{padding:5rem 4vw}
   .proj-grid{grid-template-columns:1fr}
   .proj-card.featured{grid-column:auto}
+  .proj-card[style*="grid-column:1/-1"]{grid-column:auto!important}
+  .proj-card[style*="grid-column:1/-1"] > div{grid-template-columns:1fr!important}
+  .hero-role{white-space:normal;text-align:center}
+  .hero-name{white-space:normal;text-align:center}
+  .hero-stats{gap:1.5rem}
 }
+
+/* ── Mobile ── */
 @media(max-width:640px){
-  #hero{padding:72px 1.5rem 60px}
-  .hero-name{font-size:clamp(2rem,10vw,3rem);white-space:nowrap}
-  .hero-cta{flex-direction:column;align-items:center}
-  .btn-p,.btn-g{width:100%;max-width:280px;justify-content:center}
-  .hero-stats{gap:2rem}
-  .si{padding:4.5rem 1.5rem}
-  .sec-h{font-size:1.9rem}
+  nav{padding:0 1rem;height:56px}
+  .nav-logo{font-size:.72rem}
+
+  #hero{padding:68px 1.25rem 56px;min-height:100svh}
+  .hero-inner{gap:1.1rem;width:100%}
+  .hero-badge{font-size:.58rem;padding:.35rem .75rem}
+  .hero-role{
+    font-size:clamp(.95rem,5vw,1.35rem);
+    white-space:normal;text-align:center;
+    overflow:visible;
+  }
+  .hero-role .role-divider{display:none}
+  .hero-role span[style]{display:none}
+  .hero-name{
+    font-size:clamp(2.2rem,11vw,3.2rem);
+    white-space:normal;letter-spacing:-.03em;
+  }
+  .hero-desc{font-size:.85rem;padding:0 .25rem}
+  .hero-cta{flex-direction:column;align-items:center;gap:.75rem;width:100%}
+  .btn-p,.btn-g{width:100%;max-width:300px;justify-content:center;font-size:.8rem}
+  .hero-stats{gap:1.25rem;flex-wrap:wrap}
+  .hero-stat .num{font-size:1.6rem}
+  .hero-stat .lbl{font-size:.58rem}
+  .hero-scroll{display:none}
+
+  .si{padding:4rem 1.25rem}
+  .sec-h{font-size:1.7rem;letter-spacing:-.02em}
+  .sec-sub{font-size:.88rem}
+  .sec-tag{font-size:.58rem}
+
+  /* about */
+  .about-grid{gap:2rem}
+  .id-photo-wrap{aspect-ratio:4/5}
+  .id-info{padding:1.1rem 1.25rem 1.4rem}
+  .id-name{font-size:1.05rem}
+  .id-role{font-size:.65rem}
+  .id-meta{gap:.45rem}
+  .id-row{font-size:.75rem}
+  .id-key{font-size:.54rem;min-width:60px}
+  .id-badge{font-size:.54rem;padding:.28rem .7rem}
+  .id-photo-name{font-size:.88rem}
+  .id-photo-role-tag{font-size:.52rem;padding:.2rem .45rem}
+
+  .tl-title{font-size:.85rem}
+  .tl-desc{font-size:.76rem}
+  .about-text p{font-size:.87rem}
+
+  /* skills */
+  .skills-header{margin-bottom:2.5rem}
+  .sk-tags{gap:.35rem}
+  .sk-tag{font-size:.66rem;padding:.3rem .7rem}
+  .sk-cat-label{font-size:.58rem}
+  .sk-featured-grid{grid-template-columns:1fr;gap:.85rem}
+  .sk-feat-card{padding:1.25rem}
+  .sk-feat-name{font-size:.82rem}
+  .sk-feat-desc{font-size:.7rem}
+
+  /* projects */
+  .proj-grid{gap:1rem}
+  .proj-body{padding:1.25rem}
+  .proj-name{font-size:1rem}
+  .proj-desc{font-size:.78rem}
+  .proj-arch{padding:.6rem}
+  .proj-arch-text{font-size:.7rem}
+  .proj-num{font-size:.58rem}
+  .proj-pill{font-size:.6rem}
+  .proj-visual{min-height:160px!important}
+  .proj-card[style*="grid-column:1/-1"] > div{
+    display:flex!important;flex-direction:column!important;
+  }
+
+  /* edu */
+  .edu-card{padding:1.5rem 1.25rem}
+  .edu-degree,.edu-title{font-size:.95rem}
+  .edu-desc{font-size:.76rem}
+  .edu-period{font-size:.58rem}
+  .edu-icon{width:38px;height:38px;font-size:1rem;border-radius:8px}
+
+  /* github */
+  .gh-grid{grid-template-columns:repeat(3,1fr);gap:.75rem}
+  .gh-stat{padding:1.1rem .75rem}
+  .gh-stat .g-num{font-size:1.5rem}
+  .gh-stat .g-lbl{font-size:.55rem}
+  .gh-activity{padding:1.25rem}
+  .activity-lang{font-size:.58rem;min-width:80px}
+  .activity-pct{font-size:.55rem}
+
+  /* contact */
+  .contact-intro p{font-size:.87rem}
+  .social-link{padding:.8rem 1rem}
+  .s-val{font-size:.76rem}
+  .s-icon{width:34px;height:34px;font-size:.8rem}
   .fg-row{grid-template-columns:1fr}
-  .sk-featured-grid{grid-template-columns:1fr}
-  footer{flex-direction:column;text-align:center}
-  .gh-grid{grid-template-columns:repeat(3,1fr)}
+  .fg label{font-size:.55rem}
+  .fg input,.fg textarea{font-size:.84rem;padding:.75rem .9rem}
+  .wa-btn{font-size:.8rem;padding:.85rem 1.5rem}
+  .form-note{font-size:.6rem}
+
+  /* footer */
+  footer{flex-direction:column;text-align:center;padding:2rem 1.25rem;gap:.75rem}
+  .ft-copy,.ft-stack{font-size:.58rem}
+
+  /* mob-menu */
+  .mob-menu a{font-size:1.5rem}
+  .mob-menu{gap:1.6rem}
 }
-@media(max-width:400px){
-  .hero-name{font-size:clamp(1.5rem,8vw,2.2rem);white-space:nowrap}
-  .hero-stat .num{font-size:1.5rem}
-  .gh-grid{grid-template-columns:1fr}
+
+/* ── Small mobile (360–479px) ── */
+@media(max-width:479px){
+  .hero-name{font-size:clamp(1.9rem,10vw,2.8rem)}
+  .hero-role{font-size:clamp(.88rem,4.5vw,1.2rem)}
+  .hero-desc{font-size:.82rem}
+  .btn-p,.btn-g{font-size:.76rem;padding:.7rem 1.2rem}
+  .sec-h{font-size:1.5rem}
+  .id-photo-wrap{aspect-ratio:1/1}
+  .gh-grid{grid-template-columns:repeat(3,1fr)}
+  .sk-feat-card{padding:1rem}
+  .proj-visual{min-height:140px!important}
+  .hero-stats{gap:1rem}
+  .hero-stat .num{font-size:1.4rem}
+}
+
+/* ── Extra small (320px — Galaxy fold closed etc.) ── */
+@media(max-width:360px){
+  nav{padding:0 .75rem;height:52px}
+  .nav-logo{font-size:.65rem}
+  #hero{padding:60px 1rem 48px}
+  .hero-inner{gap:.9rem}
+  .hero-badge{font-size:.52rem;padding:.28rem .6rem}
+  .hero-name{font-size:clamp(1.6rem,9.5vw,2.4rem);letter-spacing:-.025em}
+  .hero-role{font-size:clamp(.8rem,4vw,1.1rem)}
+  .hero-desc{font-size:.78rem;line-height:1.7}
+  .btn-p,.btn-g{font-size:.73rem;padding:.65rem 1rem}
+  .hero-stat .num{font-size:1.25rem}
+  .hero-stat .lbl{font-size:.52rem;letter-spacing:.08em}
+  .si{padding:3.5rem 1rem}
+  .sec-h{font-size:1.35rem}
+  .id-info{padding:.9rem 1rem 1.2rem}
+  .id-name{font-size:.95rem}
+  .id-key{min-width:54px;font-size:.5rem}
+  .id-row{font-size:.7rem}
+  .proj-body{padding:1rem}
+  .proj-name{font-size:.9rem}
+  .proj-visual{min-height:120px!important}
+  .edu-card{padding:1.2rem 1rem}
+  .edu-title,.edu-degree{font-size:.85rem}
+  .gh-stat .g-num{font-size:1.25rem}
+  .activity-lang{font-size:.52rem;min-width:70px}
+  footer{padding:1.75rem 1rem}
+  .ft-copy,.ft-stack{font-size:.52rem;letter-spacing:.06em}
+  .mob-menu a{font-size:1.3rem}
+  .mob-menu{gap:1.3rem}
+  .wa-btn{font-size:.74rem;padding:.75rem 1rem}
 }
