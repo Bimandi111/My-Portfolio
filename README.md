@@ -27,7 +27,7 @@ A modern, interactive portfolio website showcasing software engineering projects
 
 ### Tools & Deployment
 - **Git** – Version control
-- **Vercel** – Recommended deployment platform
+- **Netlify** – Recommended deployment platform
 - **VS Code** – Development environment
 
 ## 📁 Project Structure
@@ -156,5 +156,7 @@ This is a personal portfolio. For suggestions or issues, feel free to reach out 
 - GitHub Issues: [github.com/Bimandi111/portfolio/issues](https://github.com/Bimandi111/portfolio/issues)
 
 ---
+
+visit site on -> https://bimandinesanga.netlify.app
 
 **Built with** ❤️ **using HTML · CSS · JavaScript · Three.js · WebGL**
