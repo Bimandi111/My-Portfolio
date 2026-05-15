@@ -132,7 +132,6 @@ Update CSS variables in `style.css`:
 ## 🔗 Links & APIs
 
 - **GitHub**: [github.com/Bimandi111](https://github.com/Bimandi111)
-- **WhatsApp**: [+94 729 698 990](https://wa.me/94729698990)
 - **Three.js**: [three.js r128](https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js)
 - **GitHub Stats**: [GitHub Readme Stats API](https://github.com/anuraghazra/github-readme-stats)
 
@@ -151,8 +150,7 @@ Update CSS variables in `style.css`:
 ## 🤝 Contributing
 
 This is a personal portfolio. For suggestions or issues, feel free to reach out via:
-- Email: (add your email)
-- WhatsApp: [+94 729 698 990](https://wa.me/94729698990)
+- Email: nesanghabim25@gmail.com
 - GitHub Issues: [github.com/Bimandi111/portfolio/issues](https://github.com/Bimandi111/portfolio/issues)
 
 ---
