@@ -23,13 +23,8 @@
       background: #050505;
       color: #f6f3f5;
       font-family: "DM Sans", sans-serif;
-      overflow-x: hidden
-    }
-
-    @media (pointer: fine) {
-      body {
-        cursor: none;
-      }
+      overflow-x: hidden;
+      cursor: auto
     }
 
     body::before {
@@ -76,150 +71,6 @@
       filter: drop-shadow(0 0 16px rgba(255, 60, 166, .8))
     }
 
-    .cursor-dot,
-    .cursor-ring,
-    .cursor-trail,
-    .cursor-scan,
-    .cursor-label {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 10000;
-      opacity: 0;
-      transform: translate(-50%, -50%);
-      transition: opacity .14s ease, width .18s ease, height .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease, transform .18s ease, border-radius .18s ease, letter-spacing .18s ease
-    }
-
-    .cursor-dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: #ffffff;
-      box-shadow: 0 0 10px rgba(255, 146, 204, .9), 0 0 16px rgba(255, 146, 204, .5);
-      z-index: 10006
-    }
-
-    .cursor-ring {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 146, 204, .8);
-      background: rgba(255, 60, 166, .03);
-      box-shadow: 0 0 12px rgba(255, 60, 166, .08);
-      z-index: 10005
-    }
-
-    .cursor-trail {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 120, 200, .45) 0%, rgba(255, 120, 200, .15) 35%, rgba(255, 120, 200, 0) 72%);
-      filter: blur(6px);
-      z-index: 10004
-    }
-
-    .cursor-scan {
-      width: 18px;
-      height: 1px;
-      background: linear-gradient(90deg, rgba(255, 146, 204, 0), rgba(255, 146, 204, .95), rgba(255, 146, 204, 0));
-      box-shadow: 0 0 8px rgba(255, 146, 204, .7);
-      z-index: 10005;
-      transform-origin: center center;
-    }
-
-    .cursor-label {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 56px;
-      height: 18px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, .12);
-      background: rgba(12, 12, 16, .42);
-      -webkit-backdrop-filter: blur(8px);
-      backdrop-filter: blur(8px);
-      color: #fff;
-      font: 700 8px/1 "Space Mono", monospace;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      z-index: 10007;
-      opacity: 0
-    }
-
-    .cursor-label.is-visible {
-      opacity: 1
-    }
-
-    .cursor-ring.is-hovering,
-    .cursor-ring.is-link {
-      width: 26px;
-      height: 26px;
-      border-color: rgba(255, 172, 218, .95);
-      box-shadow: 0 0 16px rgba(255, 60, 166, .2)
-    }
-
-    .cursor-ring.is-project {
-      width: 150px;
-      height: 34px;
-      border-radius: 999px;
-      background: rgba(15, 15, 18, .44);
-      border-color: rgba(255, 255, 255, .18);
-      box-shadow: 0 0 16px rgba(255, 60, 166, .1)
-    }
-
-    .cursor-ring.is-3d {
-      width: 120px;
-      height: 36px;
-      border-radius: 999px;
-      background: rgba(255, 60, 166, .04);
-      border-color: rgba(255, 182, 220, .9)
-    }
-
-    .cursor-ring.is-pressed {
-      width: 18px;
-      height: 18px;
-      background: rgba(255, 60, 166, .05)
-    }
-
-    .cursor-ring.is-hovering {
-      width: 30px;
-      height: 30px;
-      border-color: rgba(255, 172, 218, .95);
-      box-shadow: 0 0 20px rgba(255, 60, 166, .18), 0 0 26px rgba(255, 60, 166, .12)
-    }
-
-    .cursor-ring.is-link {
-      width: 30px;
-      height: 30px;
-      border-color: rgba(255, 196, 230, 1);
-      box-shadow: 0 0 22px rgba(255, 60, 166, .2)
-    }
-
-    .cursor-ring.is-project {
-      width: 170px;
-      height: 38px;
-      border-radius: 999px;
-      border-color: rgba(255, 255, 255, .16);
-      background: rgba(15, 15, 18, .46);
-      box-shadow: 0 0 18px rgba(255, 60, 166, .08), inset 0 0 14px rgba(255, 255, 255, .04)
-    }
-
-    .cursor-ring.is-3d {
-      width: 130px;
-      height: 38px;
-      border-radius: 999px;
-      border-color: rgba(255, 182, 220, .9);
-      background: rgba(255, 60, 166, .04)
-    }
-
-    .cursor-ring.is-pressed {
-      width: 18px;
-      height: 18px;
-      background: rgba(255, 60, 166, .05)
-    }
 
     @keyframes pulse-scan {
       0% { transform: rotate(0deg) scale(1); opacity: .55; }
@@ -270,8 +121,30 @@
       font-size: .76rem
     }
 
+    .nav-links a {
+      position: relative;
+      transition: color .2s ease, opacity .2s ease;
+      cursor: pointer
+    }
+
+    .nav-wrap,
+    .nav,
+    .nav-links,
+    .brand,
+    .menu-btn,
+    .connect-pill {
+      cursor: pointer
+    }
+
     .nav-links a:hover {
       color: #fff
+    }
+
+    .nav-links a:focus-visible,
+    .nav-links a:active {
+      outline: none;
+      color: #fff;
+      opacity: 1
     }
 
     .connect-pill,
