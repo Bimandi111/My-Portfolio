@@ -21,6 +21,7 @@
       const cursorDot = document.querySelector('.cursor-dot');
       const cursorRing = document.querySelector('.cursor-ring');
       const cursorTrail = document.querySelector('.cursor-trail');
+      const cursorScan = document.querySelector('.cursor-scan');
       const cursorLabel = document.querySelector('.cursor-label');
       let cursorX = window.innerWidth / 2;
       let cursorY = window.innerHeight / 2;
@@ -28,6 +29,8 @@
       let ringY = cursorY;
       let trailX = cursorX;
       let trailY = cursorY;
+      let scanX = cursorX;
+      let scanY = cursorY;
       let lastX = cursorX;
       let lastY = cursorY;
       let activeTarget = null;
@@ -64,6 +67,11 @@
           cursorY = y + (cy - y) * pull;
         }
 
+        const dx = x - lastX;
+        const dy = y - lastY;
+        const angle = Math.atan2(dy, dx);
+        cursorRing.style.setProperty('--scan-rot', `${angle}rad`);
+
         cursorDot.style.opacity = '1';
         cursorRing.style.opacity = '1';
         cursorTrail.style.opacity = String(Math.min(0.7, speed * 0.035));
@@ -80,18 +88,21 @@
       document.addEventListener('pointerup', () => cursorRing.classList.remove('is-pressed'));
 
       const animateCursor = () => {
-        const easing = 0.18;
+        const easing = 0.28;
         ringX += (cursorX - ringX) * easing;
         ringY += (cursorY - ringY) * easing;
-        trailX += (cursorX - trailX) * 0.22;
-        trailY += (cursorY - trailY) * 0.22;
+        trailX += (cursorX - trailX) * 0.36;
+        trailY += (cursorY - trailY) * 0.36;
+        scanX += (cursorX - scanX) * 0.24;
+        scanY += (cursorY - scanY) * 0.24;
 
         cursorDot.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
         cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
         cursorTrail.style.transform = `translate(${trailX}px, ${trailY}px) translate(-50%, -50%)`;
+        cursorScan.style.transform = `translate(${scanX}px, ${scanY}px) translate(-50%, -50%) rotate(${Math.atan2(cursorY - scanY, cursorX - scanX) * 180 / Math.PI}deg)`;
 
         const speed = Math.hypot(cursorX - trailX, cursorY - trailY);
-        cursorTrail.style.opacity = String(Math.max(0, Math.min(0.7, speed * 0.04)));
+        cursorTrail.style.opacity = String(Math.max(0, Math.min(0.7, speed * 0.05)));
         requestAnimationFrame(animateCursor);
       };
 
@@ -128,6 +139,7 @@
         cursorDot.style.opacity = '0';
         cursorRing.style.opacity = '0';
         cursorTrail.style.opacity = '0';
+        cursorScan.style.opacity = '0';
         cursorLabel.classList.remove('is-visible');
       });
       const contactPanel = document.querySelector('.contact-box');
