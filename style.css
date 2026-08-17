@@ -27,6 +27,31 @@
       cursor: auto
     }
 
+    .spark-particle {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, .7) 30%, rgba(255, 255, 255, 0) 72%);
+      box-shadow: 0 0 8px rgba(255, 255, 255, .9);
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1)
+    }
+
+    .nav-wrap,
+    .nav,
+    .nav-links,
+    .brand,
+    .menu-btn,
+    .connect-pill,
+    .nav-links a {
+      cursor: pointer
+    }
+
     body::before {
       content: "";
       position: fixed;

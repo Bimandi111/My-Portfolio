@@ -18,6 +18,56 @@
       });
       const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }), { threshold: .12 });
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      const particles = [];
+      const maxParticles = 16;
+
+      const createParticle = (x, y) => {
+        const particle = document.createElement('span');
+        particle.className = 'spark-particle';
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        document.body.appendChild(particle);
+
+        const life = 18 + Math.random() * 22;
+        const velocity = {
+          x: (Math.random() - 0.5) * 3.2,
+          y: (Math.random() - 0.5) * 3.2
+        };
+
+        particles.push({ el: particle, x, y, vx: velocity.x, vy: velocity.y, life, maxLife: life });
+
+        if (particles.length > maxParticles) {
+          const old = particles.shift();
+          old.el.remove();
+        }
+      };
+
+      const animateParticles = () => {
+        particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.life -= 1;
+          const alpha = Math.max(0, p.life / p.maxLife);
+          p.el.style.left = `${p.x}px`;
+          p.el.style.top = `${p.y}px`;
+          p.el.style.opacity = String(alpha);
+          p.el.style.transform = `translate(-50%, -50%) scale(${0.6 + alpha})`;
+          if (p.life <= 0) p.el.remove();
+        });
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          if (particles[i].life <= 0) particles.splice(i, 1);
+        }
+
+        requestAnimationFrame(animateParticles);
+      };
+
+      document.addEventListener('pointermove', e => {
+        createParticle(e.clientX, e.clientY);
+      });
+
+      requestAnimationFrame(animateParticles);
       const contactPanel = document.querySelector('.contact-box');
       if (window.matchMedia('(pointer: fine)').matches) {
         const cards = document.querySelectorAll('.glass, .contact-card, .stat');
