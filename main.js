@@ -18,13 +18,118 @@
       });
       const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }), { threshold: .12 });
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-      const cursorDot = document.querySelector('.cursor-dot'), cursorRing = document.querySelector('.cursor-ring');
-      let cursorX = -40, cursorY = -40, ringX = -40, ringY = -40;
-      const moveCursor = e => { cursorX = e.clientX; cursorY = e.clientY; cursorDot.style.opacity = '1'; cursorRing.style.opacity = '1'; document.documentElement.style.setProperty('--x', e.clientX + 'px'); document.documentElement.style.setProperty('--y', e.clientY + 'px'); };
+      const cursorDot = document.querySelector('.cursor-dot');
+      const cursorRing = document.querySelector('.cursor-ring');
+      const cursorTrail = document.querySelector('.cursor-trail');
+      const cursorLabel = document.querySelector('.cursor-label');
+      let cursorX = window.innerWidth / 2;
+      let cursorY = window.innerHeight / 2;
+      let ringX = cursorX;
+      let ringY = cursorY;
+      let trailX = cursorX;
+      let trailY = cursorY;
+      let lastX = cursorX;
+      let lastY = cursorY;
+      let activeTarget = null;
+
+      const setCursorLabel = (text) => {
+        if (!text) {
+          cursorLabel.classList.remove('is-visible');
+          return;
+        }
+        cursorLabel.textContent = text;
+        cursorLabel.classList.add('is-visible');
+      };
+
+      const resetCursorState = () => {
+        cursorRing.classList.remove('is-hovering', 'is-link', 'is-project', 'is-3d', 'is-pressed');
+        cursorLabel.classList.remove('is-visible');
+        activeTarget = null;
+      };
+
+      const moveCursor = e => {
+        const x = e.clientX;
+        const y = e.clientY;
+        const speed = Math.hypot(x - lastX, y - lastY);
+
+        cursorX = x;
+        cursorY = y;
+
+        if (activeTarget) {
+          const rect = activeTarget.getBoundingClientRect();
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          const pull = 0.12;
+          cursorX = x + (cx - x) * pull;
+          cursorY = y + (cy - y) * pull;
+        }
+
+        cursorDot.style.opacity = '1';
+        cursorRing.style.opacity = '1';
+        cursorTrail.style.opacity = String(Math.min(0.7, speed * 0.035));
+        cursorTrail.style.width = `${10 + Math.min(speed * 0.8, 10)}px`;
+        cursorTrail.style.height = cursorTrail.style.width;
+        document.documentElement.style.setProperty('--x', `${cursorX}px`);
+        document.documentElement.style.setProperty('--y', `${cursorY}px`);
+        lastX = x;
+        lastY = y;
+      };
+
       document.addEventListener('pointermove', moveCursor);
-      const animateCursor = () => { ringX += (cursorX - ringX) * .16; ringY += (cursorY - ringY) * .16; cursorDot.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`; cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`; requestAnimationFrame(animateCursor); }; animateCursor();
-      document.querySelectorAll('a, button, .chip, .glass').forEach(el => { el.addEventListener('pointerenter', () => cursorRing.classList.add('is-hovering')); el.addEventListener('pointerleave', () => cursorRing.classList.remove('is-hovering')); });
-      document.addEventListener('pointerleave', () => { cursorDot.style.opacity = '0'; cursorRing.style.opacity = '0'; });
+      document.addEventListener('pointerdown', () => cursorRing.classList.add('is-pressed'));
+      document.addEventListener('pointerup', () => cursorRing.classList.remove('is-pressed'));
+
+      const animateCursor = () => {
+        const easing = 0.18;
+        ringX += (cursorX - ringX) * easing;
+        ringY += (cursorY - ringY) * easing;
+        trailX += (cursorX - trailX) * 0.22;
+        trailY += (cursorY - trailY) * 0.22;
+
+        cursorDot.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+        cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+        cursorTrail.style.transform = `translate(${trailX}px, ${trailY}px) translate(-50%, -50%)`;
+
+        const speed = Math.hypot(cursorX - trailX, cursorY - trailY);
+        cursorTrail.style.opacity = String(Math.max(0, Math.min(0.7, speed * 0.04)));
+        requestAnimationFrame(animateCursor);
+      };
+
+      requestAnimationFrame(animateCursor);
+
+      const hoverables = document.querySelectorAll('a, button, .chip, .glass, .project-card, .stat, .orb, .contact-card');
+      hoverables.forEach(el => {
+        el.addEventListener('pointerenter', () => {
+          if (!window.matchMedia('(pointer: fine)').matches) return;
+
+          activeTarget = el;
+
+          if (el.closest('.project-card')) {
+            cursorRing.classList.add('is-project');
+            setCursorLabel('VIEW CASE STUDY →');
+          } else if (el.closest('.orb') || el.closest('.hero-visual')) {
+            cursorRing.classList.add('is-3d');
+            setCursorLabel('EXPLORE ↗');
+          } else if (el.tagName === 'A' || el.tagName === 'BUTTON') {
+            cursorRing.classList.add('is-hovering');
+            setCursorLabel(el.textContent.trim().slice(0, 4).toUpperCase() || 'OPEN');
+          } else {
+            cursorRing.classList.add('is-link');
+            setCursorLabel('OPEN');
+          }
+        });
+
+        el.addEventListener('pointerleave', () => {
+          resetCursorState();
+        });
+      });
+
+      document.addEventListener('pointerleave', () => {
+        cursorDot.style.opacity = '0';
+        cursorRing.style.opacity = '0';
+        cursorTrail.style.opacity = '0';
+        cursorLabel.classList.remove('is-visible');
+      });
       const contactPanel = document.querySelector('.contact-box');
       if (window.matchMedia('(pointer: fine)').matches) {
         const cards = document.querySelectorAll('.glass, .contact-card, .stat');
